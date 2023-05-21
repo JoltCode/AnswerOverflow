@@ -9,6 +9,7 @@ import {
 	type MessageResultPageProps,
 } from './MessageResultPage';
 import { PageWrapper } from './PageWrapper';
+import { getRandomSentence } from 'packages/utils';
 const meta = {
 	component: MessageResultPage,
 	parameters: {
@@ -74,6 +75,15 @@ const defaultMessage: MessageResultPageProps = {
 
 export const Primary: Story = {
 	args: defaultMessage,
+};
+
+export const PrimaryWithLongChannelTitle: Story = {
+	args: {
+		...defaultMessage,
+		channel: mockChannelWithSettings({
+			name: getRandomSentence().split(' ').join('-'),
+		}),
+	},
 };
 
 export const AllPublic: Story = {
