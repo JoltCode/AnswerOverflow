@@ -196,6 +196,36 @@ export const WithCode: Story = {
 	},
 };
 
+export const WithNewLines: Story = {
+	args: {
+		...Primary.args,
+		message: {
+			...mockMessageWithDiscordAccount(),
+			content: `
+				${loremIpsum({
+					count: 2,
+					units: 'sentences',
+				})}
+
+				${loremIpsum({
+					count: 2,
+					units: 'sentences',
+				})}
+
+				${loremIpsum({
+					count: 2,
+					units: 'sentences',
+				})}
+				
+				${loremIpsum({
+					count: 2,
+					units: 'sentences',
+				})}
+			`,
+		},
+	},
+};
+
 export const WithXSS: Story = {
 	args: {
 		...Primary.args,
