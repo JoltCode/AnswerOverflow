@@ -10,6 +10,7 @@ import {
 	MultiMessageBlurrer,
 	ServerInvite,
 	ChannelIcon,
+	useCanViewMessage,
 } from '../primitives';
 import { MessagesSearchBar } from './SearchPage';
 import {
@@ -86,14 +87,20 @@ export function MessageResultPage({
 		)
 			return null;
 
-		const Msg = ({ count }: { count: number }) => (
-			<Message
-				key={message.id}
-				message={message}
-				fullRounded
-				Blurrer={(props) => <MultiMessageBlurrer {...props} count={count} />}
-			/>
-		);
+		const Msg = ({ count }: { count: number }) => {
+			const canViewMessage = useCanViewMessage(message);
+
+			return (
+				<Message
+					key={message.id}
+					message={message}
+					fullRounded
+					showBorders
+					firstMessage={index === 0 && canViewMessage}
+					Blurrer={(props) => <MultiMessageBlurrer {...props} count={count} />}
+				/>
+			);
+		};
 
 		if (message.id === solutionMessageId) {
 			return (
