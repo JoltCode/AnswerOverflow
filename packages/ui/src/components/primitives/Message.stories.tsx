@@ -37,6 +37,10 @@ export const Primary: Story = {
 	args: { message: mockMessageWithDiscordAccount() },
 };
 
+export const PrimaryFirstMessage: Story = {
+	args: { message: mockMessageWithDiscordAccount(), firstMessage: true },
+};
+
 export const OverflowLetters: Story = {
 	args: {
 		...Primary.args,

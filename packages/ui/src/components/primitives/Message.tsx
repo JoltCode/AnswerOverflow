@@ -231,6 +231,7 @@ type MessageProps = {
 	 * If typed as a number, will collapse the content if longer than the number
 	 */
 	collapseContent?: boolean | number;
+	firstMessage?: boolean;
 };
 
 export const Message = ({
@@ -243,14 +244,18 @@ export const Message = ({
 	className,
 	fullRounded,
 	collapseContent,
+	firstMessage,
 }: MessageProps) => {
+	// dark:shadow-[0px_0px_20px_1px_rgba(255,_255,_255,_0.5)]
 	return (
 		<MessageContext.Provider value={{ message, collapseContent }}>
 			<Blurrer>
 				<div
 					className={cn(
 						`discord-message grow bg-[#E9ECF2] dark:bg-[#181B1F] ${
-							showBorders ? 'border-2' : ''
+							firstMessage ? '' : ''
+						} ${
+							showBorders ? 'border-1' : ''
 						} border-black/[.13] dark:border-white/[.13] ${
 							fullRounded ? 'rounded-standard' : 'lg:rounded-tl-standard'
 						}`,
