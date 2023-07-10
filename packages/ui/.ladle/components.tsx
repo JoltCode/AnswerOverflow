@@ -8,7 +8,6 @@ import {
 	WithTailwindTheme,
 } from './decorators';
 import { GlobalStateProvider } from './global-state';
-import React from 'react';
 
 export const Provider: GlobalProvider = ({ children, globalState }) => {
 	return (

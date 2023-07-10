@@ -30,6 +30,21 @@ Primary.args = {
 	message: mockMessageWithDiscordAccount(),
 };
 
+export const WithReaction = Primary.bind({});
+WithReaction.args = {
+	...Primary.args,
+	message: {
+		...mockMessageWithDiscordAccount(),
+		reactions: [
+			{
+				reactorIds: [mockDiscordAccount().id],
+				emojiId: '123456789',
+				emojiName: '+1',
+			},
+		],
+	},
+};
+
 export const OverflowLetters = Primary.bind({});
 
 OverflowLetters.args = {

@@ -4,7 +4,6 @@ import discordMarkdown from 'discord-markdown';
 import Image from 'next/image';
 import React, { createContext, useContext, useState } from 'react';
 import { DiscordAvatar } from './DiscordAvatar';
-import { useIsUserInServer } from '~ui/utils/hooks';
 import { getSnowflakeUTCDate } from '~ui/utils/snowflake';
 import { cn } from '~ui/utils/styling';
 import { LinkButton, DiscordIcon } from './base';
@@ -19,6 +18,7 @@ import { type Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { getImageHeightWidth } from '~ui/utils/other';
 import Link from 'next/link';
+import { useCanViewMessage } from '~ui/utils/message';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MessageContext = createContext<
@@ -28,7 +28,7 @@ const MessageContext = createContext<
 	| null
 >(null);
 
-export function useMessageContext() {
+function useMessageContext() {
 	const context = useContext(MessageContext);
 	if (!context) {
 		throw new Error(
@@ -148,6 +148,33 @@ export const MessageContents = () => {
 	);
 };
 
+export const MessageReactions = () => {
+	const { message } = useMessageContext();
+	if (message.reactions.length === 0) return null;
+
+	const reactionsParsed = message.reactions.map((reaction) => {
+		const emoji = emojiToUnicode(reaction.emojiName);
+		return {
+			...reaction,
+			emojiName: emoji,
+		};
+	});
+
+	console.log(message.reactions);
+
+	return (
+		<ul>
+			{message.reactions.map((reaction) => (
+				<div
+					key={`emoji-${reaction.emojiId ?? ''}-${reaction.emojiName ?? ''}`}
+				>
+					{reaction.emojiName}
+				</div>
+			))}
+		</ul>
+	);
+};
+
 export const MessageContentWithSolution = (props: {
 	solution: Pick<MessageProps, 'message'>;
 }) => {
@@ -168,6 +195,7 @@ export const MessageContentWithSolution = (props: {
 					Jump to solution
 				</Link>
 			</div>
+			<MessageReactions />
 		</div>
 	);
 };
@@ -230,6 +258,7 @@ export type MessageProps = {
 	message: APIMessageWithDiscordAccount;
 	avatar?: React.ReactNode;
 	content?: React.ReactNode;
+	reactions?: React.ReactNode;
 	authorArea?: React.ReactNode;
 	images?: React.ReactNode;
 	showBorders?: boolean;
@@ -249,6 +278,7 @@ export const Message = ({
 	Blurrer = MessageBlurrer,
 	showBorders,
 	content = <MessageContents />,
+	reactions = <MessageReactions />,
 	authorArea = <MessageAuthorArea />,
 	images = <MessageAttachments />,
 	className,
@@ -273,18 +303,13 @@ export const Message = ({
 						<div className="flex items-center gap-2">{authorArea}</div>
 						{content}
 						{images}
+						{reactions}
 					</div>
 				</div>
 			</Blurrer>
 		</MessageContext.Provider>
 	);
 };
-
-export function useCanViewMessage(message: APIMessageWithDiscordAccount) {
-	const isUserInServer = useIsUserInServer(message.serverId);
-	if (isUserInServer === 'loading' && !message.public) return false;
-	return message.public || isUserInServer === 'in_server';
-}
 
 export function MessageBlurrer({ children }: { children: React.ReactNode }) {
 	const { message } = useMessageContext();
