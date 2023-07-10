@@ -2,7 +2,9 @@
 	"name": "@answeroverflow/eslint-config-custom",
 	"version": "0.0.0",
 	"main": "index.js",
-	"files": ["next.js"],
+	"files": [
+		"next.js"
+	],
 	"license": "MIT",
 	"scripts": {
 		"clean": "rm -rf node_modules"
@@ -26,7 +28,8 @@
 		"prettier-plugin-tailwindcss": "^0.3.0"
 	},
 	"devDependencies": {
-		"@answeroverflow/tsconfig": "*"
+		"@answeroverflow/tsconfig": "*",
+		"eslint-plugin-react-refresh": "^0.4.3"
 	},
 	"publishConfig": {
 		"access": "public"

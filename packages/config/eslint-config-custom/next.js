@@ -4,7 +4,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
 	extends: ['./index.js', 'plugin:tailwindcss/recommended', 'next', 'prettier'],
-	plugins: ['@typescript-eslint'],
+	plugins: ['@typescript-eslint', 'react-refresh'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 2021,
@@ -28,6 +28,7 @@ module.exports = {
 		],
 		// Disable tailwindcss rearrange class
 		'tailwindcss/classnames-order': 'off',
+		"react-refresh/only-export-components": "warn"
 	},
 	settings: {
 		'import/parsers': {
