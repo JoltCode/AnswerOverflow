@@ -2,7 +2,7 @@
 import type { APIMessageWithDiscordAccount } from '@answeroverflow/api';
 import discordMarkdown from 'discord-markdown';
 import Image from 'next/image';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { DiscordAvatar } from './DiscordAvatar';
 import { useIsUserInServer } from '~ui/utils/hooks';
 import { getSnowflakeUTCDate } from '~ui/utils/snowflake';
@@ -13,7 +13,6 @@ import {
 } from '@answeroverflow/hooks';
 import { getDiscordURLForMessage } from '~ui/utils/discord';
 import { type Image as ImageType } from 'react-grid-gallery';
-import { useEffect } from 'react';
 import { type Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { getImageHeightWidth } from '~ui/utils/other';
@@ -122,6 +121,22 @@ const DEFAULT_COLLAPSE_CONTENT_LENGTH = 500;
 export const MessageContents = () => {
 	const { message, collapseContent } = useMessageContext();
 	const { toHTML } = discordMarkdown;
+
+	useEffect(() => {
+		const messageContentHasCodeblock = message.content
+			.split('')
+			.some((char) => char === '`');
+
+		console.log(messageContentHasCodeblock);
+	}, []);
+
+	//
+	// if (messageContentHasCodeblock) {
+	// 	hljs.configure({
+	// 		ignoreUnescapedHTML: true,
+	// 	});
+	// 	hljs.highlightAll();
+	// }
 
 	const collapseBy =
 		typeof collapseContent === 'number'
