@@ -43,7 +43,7 @@ export async function toAOMessage(message: Message): Promise<AOMessage> {
 		const users = reaction.users.cache;
 		for (const user of users.values()) {
 			const emoji = reaction.emoji;
-			if (!emoji || !emoji.name || !emoji.id) continue;
+			if (!emoji) continue;
 			reactions.push({
 				userId: user.id,
 				messageId: message.id,

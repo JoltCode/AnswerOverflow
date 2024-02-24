@@ -68,6 +68,7 @@ export async function searchMessages(opts: MessageSearchOptions) {
 }
 
 export function indexMessageForSearch(messages: BaseMessageWithRelations[]) {
+	return;
 	return elastic.bulkUpsertMessages(
 		messages.map((m) => ({
 			...m,

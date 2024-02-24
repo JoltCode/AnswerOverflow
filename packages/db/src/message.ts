@@ -15,6 +15,7 @@ import {
 	UserServerSettings,
 	Attachment,
 	dbChannels,
+	Reaction,
 } from './schema';
 import { and, eq, gte, inArray, or, sql } from 'drizzle-orm';
 import { addFlagsToUserServerSettings } from './utils/userServerSettingsUtils';
@@ -50,6 +51,7 @@ type MessageWithAuthorServerSettings = Pick<
 		userServerSettings: UserServerSettings[];
 	};
 	attachments: Attachment[];
+	reactions: Reaction[];
 };
 
 export function applyPublicFlagsToMessages<
@@ -234,6 +236,12 @@ export async function findMessageByIdWithDiscordAccount(id: string) {
 				server: {
 					columns: {
 						bitfield: true,
+					},
+				},
+				reactions: {
+					columns: {
+						emojiId: true,
+						messageId: true,
 					},
 				},
 			},

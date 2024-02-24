@@ -391,8 +391,8 @@ export const attachmentSchema = createInsertSchema(dbAttachments).extend({
 export const dbEmojis = mysqlTable(
 	'Emoji',
 	{
-		id: snowflake('id').notNull(),
-		name: varchar('name', { length: 191 }).notNull(),
+		id: varchar('id', { length: 191 }),
+		name: varchar('name', { length: 191 }),
 	},
 	(table) => {
 		return {
@@ -402,7 +402,7 @@ export const dbEmojis = mysqlTable(
 );
 
 export const emojiSchema = createInsertSchema(dbEmojis).extend({
-	id: z.string(),
+	id: z.string().optional(),
 });
 
 export const dbReactions = mysqlTable(
@@ -410,7 +410,7 @@ export const dbReactions = mysqlTable(
 	{
 		messageId: snowflake('messageId').notNull(),
 		userId: snowflake('userId').notNull(),
-		emojiId: snowflake('emojiId').notNull(),
+		emojiId: snowflake('emojiId'),
 	},
 	(table) => {
 		return {
@@ -604,3 +604,4 @@ export type BaseMessageWithRelations = BaseMessage & {
 };
 
 export type Attachment = typeof dbAttachments.$inferSelect;
+export type Reaction = typeof dbReactions.$inferSelect;

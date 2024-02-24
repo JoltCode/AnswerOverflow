@@ -124,6 +124,7 @@ export const Message = (
 					<div className="flex items-center gap-2">
 						<MessageAuthorArea {...props} />
 					</div>
+					<span>Found {props.message.reactions.length} reactions</span>
 					{props.content ? props.content : <MessageContents {...props} />}
 					<MessageEmbeds {...props} />
 					<MessageAttachments {...props} />
