@@ -46,7 +46,7 @@ export const Navbar = (props: {
 				<Suspense>
 					<MessagesSearchBar
 						className={
-							'absolute left-1/2 top-1/2 hidden w-full max-w-[620px] -translate-x-1/2 -translate-y-1/2 2xl:block'
+							'absolute left-1/2 top-1/2 hidden w-full max-w-[620px] -translate-x-1/2 -translate-y-1/2 xl:block'
 						}
 					/>
 				</Suspense>
